@@ -27,11 +27,12 @@ class Node {
 }
 
 class LinkedList {
-  #size;
+  #size = 0;
+  #firstNode;
 
   constructor() {
-    this.firstNode = new Node();
-    this.#size = 0;
+    this.#firstNode = new Node();
+    // this.#size = 0;
   }
 
   size() {
@@ -42,12 +43,12 @@ class LinkedList {
     const newNode = new Node(value);
 
     if (this.size() === 0) {
-      this.firstNode = newNode;
+      this.#firstNode = newNode;
       this.#size++;
       return;
     }
 
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
 
     while (currentNode.nextNode !== null) {
       currentNode = currentNode.nextNode;
@@ -58,10 +59,10 @@ class LinkedList {
   }
 
   prepend(value) {
-    const newFirstNode = new Node(value, this.firstNode);
-    // newFirstNode.nextNode = this.firstNode.nextNode;
+    const newFirstNode = new Node(value, this.#firstNode);
+    // newFirstNode.nextNode = this.#firstNode.nextNode;
 
-    this.firstNode = newFirstNode;
+    this.#firstNode = newFirstNode;
 
     this.#size++;
   }
@@ -73,7 +74,7 @@ class LinkedList {
       return undefined;
     }
 
-    return this.firstNode.value;
+    return this.#firstNode.value;
   }
 
   tail() {
@@ -81,7 +82,7 @@ class LinkedList {
       return undefined;
     }
 
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
 
     while (currentNode.nextNode !== null) {
       currentNode = currentNode.nextNode;
@@ -95,7 +96,7 @@ class LinkedList {
       return undefined;
     }
 
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
 
     for (let i = 0; i < index; i++) {
       currentNode = currentNode.nextNode;
@@ -109,12 +110,12 @@ class LinkedList {
       return undefined;
     }
 
-    const returnedNode = this.firstNode;
+    const returnedNode = this.#firstNode;
 
-    this.firstNode = this.firstNode.nextNode;
+    this.#firstNode = this.#firstNode.nextNode;
 
     this.#size--;
-    return returnedNode;
+    return returnedNode.value;
   }
 
   contains(value) {
@@ -122,7 +123,7 @@ class LinkedList {
       return false;
     }
 
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
 
     while (currentNode.nextNode !== null) {
       if (currentNode.value === value) {
@@ -141,7 +142,7 @@ class LinkedList {
     }
 
     let index = 0;
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
 
     while (currentNode.nextNode !== null) {
       if (currentNode.value === value) {
@@ -161,7 +162,7 @@ class LinkedList {
     }
 
     let string = "";
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
     while (currentNode.nextNode !== null) {
       string += `( ${currentNode.value} ) -> `;
 
@@ -191,7 +192,7 @@ class LinkedList {
       return;
     }
 
-    let currentNode = this.firstNode;
+    let currentNode = this.#firstNode;
     for (let i = 0; i < index - 1; i++) {
       currentNode = currentNode.nextNode;
     }
@@ -218,12 +219,12 @@ class LinkedList {
     }
 
     if (index === 0) {
-      this.firstNode = this.firstNode.nextNode;
+      this.#firstNode = this.#firstNode.nextNode;
       this.#size--;
       return;
     }
 
-    let prevNode = this.firstNode;
+    let prevNode = this.#firstNode;
     for (let i = 0; i < index - 1; i++) {
       prevNode = prevNode.nextNode;
     }
