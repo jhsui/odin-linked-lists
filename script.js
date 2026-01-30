@@ -171,6 +171,73 @@ class LinkedList {
     string += `( ${currentNode.value} )`;
     return string;
   }
+
+  insertAt(index, ...values) {
+    if (!Number.isInteger(index) || index < 0 || index > this.size()) {
+      throw new RangeError("Index is out of range!!!");
+    }
+
+    if (index === 0) {
+      values.reverse().forEach((val) => {
+        // const newNode = new Node(val);
+        this.prepend(val);
+      });
+      return;
+    } else if (index === this.size()) {
+      values.forEach((val) => {
+        this.append(val);
+      });
+
+      return;
+    }
+
+    let currentNode = this.firstNode;
+    for (let i = 0; i < index - 1; i++) {
+      currentNode = currentNode.nextNode;
+    }
+
+    let endNode = currentNode.nextNode;
+
+    for (let i = 0; i < values.length; i++) {
+      const newNode = new Node(values[i]);
+
+      currentNode.nextNode = newNode;
+      currentNode = newNode;
+
+      this.#size++;
+
+      if (i === values.length - 1) {
+        currentNode.nextNode = endNode;
+      }
+    }
+  }
+
+  removeAt(index) {
+    if (!Number.isInteger(index) || index < 0 || index > this.size() - 1) {
+      throw new RangeError("Index is out of range!!!");
+    }
+
+    if (index === 0) {
+      this.firstNode = this.firstNode.nextNode;
+      this.#size--;
+      return;
+    }
+
+    let prevNode = this.firstNode;
+    for (let i = 0; i < index - 1; i++) {
+      prevNode = prevNode.nextNode;
+    }
+
+    if (index === this.size() - 1) {
+      prevNode.nextNode = null;
+      this.#size--;
+
+      return;
+    }
+
+    prevNode.nextNode = prevNode.nextNode.nextNode;
+    this.#size--;
+  }
 }
 
 export { LinkedList };
